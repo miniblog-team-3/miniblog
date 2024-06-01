@@ -1,0 +1,19 @@
+.post-list-container {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  h2 {
+    text-align: center;
+  }
+  p {
+    text-align: center;
+  }
+  hr {
+    width: 500px;
+    height: 1px;
+    border: 0;
+    background: lightgray;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+}

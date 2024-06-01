@@ -1,0 +1,22 @@
+* {
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 0;
+}
+
+ol,
+ul {
+  text-decoration: none;
+  color: black;
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+}
+
+li {
+  cursor: pointer;
+}
