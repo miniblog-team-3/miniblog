@@ -1,8 +1,9 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./LoginPage.css";
 import React, { useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { RiLockPasswordLine } from "react-icons/ri";
+import { click } from "@testing-library/user-event/dist/click";
 
 
 
@@ -16,6 +17,10 @@ export default function LoginPage() {
 
   const [emailValid, setEmailValid] = useState(false);
   const [passwordValid, setPasswordValid] = useState(false);
+
+  const location = useLocation()
+  console.log("location : ", location)
+
 
 
   // const emailRegEx = /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/i;
@@ -50,6 +55,16 @@ export default function LoginPage() {
 
   }
 
+  const clickLoginEvent = () => {
+    navigete('/', {
+      state : {
+        email,
+        password
+      }
+    } 
+    )
+  }
+
 
 
   return (
@@ -74,7 +89,7 @@ export default function LoginPage() {
               </div>  
           </div>
           <div className="error-message">{!passwordValid && password.length > 0 && <div>영문, 숫자, 특수문자 포함 8자 이상 입력해주세요.</div>}</div>
-          <button className="login" type="button" >로그인</button>
+          <button className="login" type="button" onClick={clickLoginEvent}>로그인</button>
           <button className="google-login" type="button" >구글 로그인</button>
           <div>
           <div className="signup-box">

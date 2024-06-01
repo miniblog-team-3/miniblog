@@ -69,6 +69,17 @@ export default function SignUpPage() {
   //   setName(e.target.value);
   // }
 
+  const clickMoveChange = () => {
+    console.log("클릭")
+    navigete('/login', {
+      state : {
+        email,
+        password,
+        confirmPw
+      }
+    })
+  }
+
 
 
   return (
@@ -109,7 +120,7 @@ export default function SignUpPage() {
               <input id={"name"} type="name" name="name" placeholder="이름을 입력해주세요" value={name} onChange={handleNameChange}/>
             </div> */}
             <div className="last-box">
-            <button className="signup-btn" type="button" >가입하기</button>
+            <button className="signup-btn" type="button" onClick={clickMoveChange}>가입하기</button>
             <button className="cancle-btn" type="button" ><Link to="/login">취소하기</Link></button>
             </div>
           </div>
