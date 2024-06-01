@@ -34,6 +34,25 @@ p{
   padding: 10px;
 }
 
+.input-wrap {
+  width: 320px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  font-size: 13px;
+  padding-left: 10px;
+  input {
+    border: none;
+    outline: none !important;
+    margin: 0;
+    padding: 0;
+    width: 280px;
+    height: 20px;
+  }
+}
+
 input {
   width: 320px;
   height: 50px;
@@ -99,3 +118,7 @@ input::placeholder {
   text-align: left !important;
   color: tomato;
 }
+
+
+
+

@@ -11,7 +11,7 @@ export default function PostDetailPage() {
     <>
       <div className="post-detail-container">
         {/* <h1>{postContent.title}</h1>
-        <p>{postContent.content}</p> */}
+        <p>{postContent.csdsdsdontent}</p> */}
       </div>
     </>
   );
