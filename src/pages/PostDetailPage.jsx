@@ -6,7 +6,7 @@ import { useLocation } from "react-router-dom";
 export default function PostDetailPage() {
   const [post, setPost] = useState({});
 
-  //현재 url 제공하는 훅
+  //현재 url 제공하는 훅.
   const location = useLocation();
   const pathName = location.pathname;
 
@@ -19,7 +19,7 @@ export default function PostDetailPage() {
         console.log("detailId : ", detailId);
         setPost(detailId);
       } catch (err) {
-        console.error("글 디테일 정보가져오기 에러  : ", err);
+        console.error("글 디테일 정보가져오기 에러 : ", err);
       }
     };
     fetchData();
