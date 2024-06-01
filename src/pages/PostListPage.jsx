@@ -1,21 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./PostListPage.css";
-import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function PostListPage() {
-  const location = useLocation();
-  const title = location.state ? location.state.title : null;
-  const description = location.state ? location.state.description : null;
+  const [posts, setPosts] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedPosts = JSON.parse(localStorage.getItem("posts")) || [];
+    setPosts(storedPosts);
+  }, []);
+
+  const handleClick = (e) => {
+    navigate("detail");
+  };
 
   return (
-    <div className="post-list-container">
-      {title && (
-        <>
-          <h2>{title}</h2>
-          <p>{description}</p>
-        </>
-      )}
-      {!title && <p>글 목록이 없습니다.</p>}
-    </div>
+    <>
+      <div className="post-list-container">
+        {posts.length > 0 ? (
+          posts.map((post, idx) => (
+            <div key={idx} onClick={handleClick} style={{ cursor: "pointer" }}>
+              <h2>{post.title}</h2>
+              <p>{post.description}</p>
+              <hr />
+            </div>
+          ))
+        ) : (
+          <p>글 목록이 없습니다.</p>
+        )}
+      </div>
+    </>
   );
 }
