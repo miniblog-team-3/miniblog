@@ -19,7 +19,7 @@ export default function PostDetailPage() {
         console.log("detailId : ", detailId);
         setPost(detailId);
       } catch (err) {
-        console.error("글 디테일 정보가져오기 에러 : ", err);
+        console.error("글 디테일 정보가져오기 에러  : ", err);
       }
     };
     fetchData();
