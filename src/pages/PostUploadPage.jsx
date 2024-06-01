@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./PostUploadPage.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate, useOutletContext } from "react-router-dom";
 
 export default function PostUploadPage() {
   const [title, setTitle] = useState("");
@@ -9,32 +9,58 @@ export default function PostUploadPage() {
 
   const handleChangeTitle = (e) => {
     setTitle(e.target.value);
-    console.log("title : ", e.target.value);
+    console.log("title: ", e.target.value);
   };
 
   const handleChangeDescription = (e) => {
     setDescription(e.target.value);
-    console.log("내용 : ", e.target.value);
+    console.log("내용: ", e.target.value);
   };
 
   const clickMoveEvent = (e) => {
     e.preventDefault();
-    console.log("클릭");
-    navigate("/", {
-      state: {
-        title,
-        description,
-      },
-    });
+    const postData = { title, description };
+    const existingData = JSON.parse(localStorage.getItem("posts")) || [];
+    localStorage.setItem("posts", JSON.stringify([...existingData, postData]));
+    navigate("/"
+    // {
+    //   state: {
+    //     title,
+    //     description
+    //   }
+    // }
+    );
   };
 
   return (
-    <div className="post-upload-container">
-      <form className="post-input">
-        <input type="text" name="title" id="title" value={title} onChange={handleChangeTitle} />
-        <textarea name="description" id="description" value={description} onChange={handleChangeDescription}></textarea>
-        <button onClick={clickMoveEvent}>클릭</button>
-      </form>
-    </div>
+    <>
+      <div className="post-upload-container">
+        <form className="post-input">
+          <input
+            className="title-input"
+            type="text"
+            placeholder="제목"
+            onChange={handleChangeTitle}
+            name="title"
+            value={title}
+          />
+          <textarea 
+            className="content-input"
+            placeholder="내용을 입력해주세요"
+            onChange={handleChangeDescription}
+            name="description"
+            value={description}
+          />
+          <input 
+            type="file"
+          />
+          <button
+            type="submit"
+            className="upload-btn"
+            onClick={clickMoveEvent}
+          >등록</button>
+        </form>
+      </div>
+    </>
   );
 }
