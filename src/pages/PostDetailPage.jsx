@@ -7,6 +7,7 @@ export default function PostDetailPage() {
     <>
       <div className="post-detail-container">
         <h1>디테일 페이지</h1>
+        <p>dfsf</p>
       </div>
     </>
   );
