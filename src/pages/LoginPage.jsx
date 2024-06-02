@@ -3,7 +3,7 @@ import "./LoginPage.css";
 import React, { useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { RiLockPasswordLine } from "react-icons/ri";
-import { click } from "@testing-library/user-event/dist/click";
+import { googleLogin } from "../api/api";
 
 
 
@@ -18,18 +18,17 @@ export default function LoginPage() {
   const [emailValid, setEmailValid] = useState(false);
   const [passwordValid, setPasswordValid] = useState(false);
 
+  const [user, setUser] = useState();
+
   const location = useLocation()
   console.log("location : ", location)
 
 
 
-  // const emailRegEx = /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/i;
-  // const passwordRegEx = /^[A-Za-z0-9]{8,20}$/
-
   // 이메일 입력
   const handelEmailChange = (e) =>{
     setEmail(e.target.value);
-    // console.log("email : ", e.target.value)
+    // console.log("email : ", e.target.value)111
 
     // 이메일 유효성 검사
     const emailRegEx = /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/i;
@@ -46,7 +45,7 @@ export default function LoginPage() {
     // console.log("password : ", e.target.value)
 
     // 비밀번호 유효성 검사
-    const passwordRegEx = /^[A-Za-z0-9](?=.*[!@#$%^&*?~_]).{8,}$/
+    const passwordRegEx = /^(?=.*[A-Za-z0-9])(?=.*[!@#$%^&*?~_]).{8,}$/
     if(passwordRegEx.test(password)){
       setPasswordValid(true);
     }else{
@@ -63,6 +62,19 @@ export default function LoginPage() {
       }
     } 
     )
+  }
+
+  const clickGoogleLogin = async() =>{
+    try {
+      const userData = await googleLogin();
+      if(userData){
+        alert("구글 로그인에 성공했습니다")
+        setUser(userData);
+        navigete('/');
+      }
+    } catch(err) {
+      console.error("구글 로그인 실패 : ", err);
+    }
   }
 
 
@@ -90,7 +102,7 @@ export default function LoginPage() {
           </div>
           <div className="error-message">{!passwordValid && password.length > 0 && <div>영문, 숫자, 특수문자 포함 8자 이상 입력해주세요.</div>}</div>
           <button className="login" type="button" onClick={clickLoginEvent}>로그인</button>
-          <button className="google-login" type="button" >구글 로그인</button>
+            <button className="google-login" type="button" onClick={clickGoogleLogin} ><img src="/google_icon.webp" alt="logo" className="google_img"/>구글 로그인</button>
           <div>
           <div className="signup-box">
             <span>계정이 없으신가요?</span>

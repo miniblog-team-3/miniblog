@@ -1,21 +1,52 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./PostListPage.css";
-import { useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { getLoadPostData } from "../api/api";
 
 export default function PostListPage() {
-  const location = useLocation();
-  const title = location.state ? location.state.title : null;
-  const description = location.state ? location.state.description : null;
+  const [posts, setPosts] = useState([]);
+  console.log("posts : ", posts);
+  const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   const storedPosts = JSON.parse(localStorage.getItem("posts")) || [];
+  //   setPosts(storedPosts);
+  // }, []);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const postItem = await getLoadPostData();
+        console.log("postItem : ", postItem);
+        setPosts(postItem);
+      } catch (err) {
+        console.error("데이터베이스에서 post에 정보를 가져오는 기능 에러 : ", err);
+      }
+    };
+    fetchPosts();
+  }, []);
+
+  const handleClick = (e) => {
+    navigate("detail");
+  };
 
   return (
-    <div className="post-list-container">
-      {title && (
-        <>
-          <h2>{title}</h2>
-          <p>{description}</p>
-        </>
-      )}
-      {!title && <p>글 목록이 없습니다.</p>}
-    </div>
+    <>
+      <div className="posts-list-container">
+        <h2 className="title">My blog List</h2>
+        <p>인기 게시물</p>
+        <div className="posts-container">
+          {posts.map((el, idx) => {
+            return (
+              <div className="img-wrapper" key={idx}>
+                <Link to={`posts/detail/${el.id}`}>
+                  <img src={el.image} alt="" />
+                </Link>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </>
   );
 }
