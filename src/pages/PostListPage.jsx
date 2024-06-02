@@ -33,7 +33,7 @@ export default function PostListPage() {
   return (
     <>
       <div className="posts-list-container">
-        <h2 className="title">인스타그램</h2>
+        <h2 className="title">My blog List</h2>
         <p>인기 게시물</p>
         <div className="posts-container">
           {posts.map((el, idx) => {
