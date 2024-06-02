@@ -154,7 +154,7 @@ export default function SignUpPage() {
             <button className="signup-btn" type="button" onClick={clickSignUpEvent}>
               가입하기
             </button>
-            <button className="cancel-btn" type="button">
+            <button className="cancle-btn" type="button">
               <Link to="/login">취소하기</Link>
             </button>
           </div>
