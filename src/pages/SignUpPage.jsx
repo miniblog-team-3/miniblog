@@ -54,8 +54,8 @@ export default function SignUpPage() {
 
   // 비밀번호 재입력
   const handleConfirmPassword = (e) =>{
-    const confirmPwValue = e.target.value;
-    setConfirmPw(confirmPwValue);
+    const confirmPwValid = e.target.value;
+    setConfirmPw(confirmPwValid);
 
     // 비밀번호 유효성 검사
     const confirmPWdRegEx = /^(?=.*[A-Za-z0-9])(?=.*[!@#$%^&*?~_]).{8,}$/
@@ -69,8 +69,20 @@ export default function SignUpPage() {
 
   // 이름 입력
   const handleNameChange = (e) =>{
-  setName(e.target.value);
+    const nameValid = e.target.value;
+    setName(nameValid);
+    // console.log("username : ", e.target.value);
+
+    // 이름 유효성 검사
+    const nameRegEx = /^[가-힣]{2,6}$/
+
+    if(nameRegEx.test(name)){
+      setNameValid(true);
+    }else{
+      setNameValid(false);
+    }
   }
+
 
   const clickMoveChange = () => {
     console.log("클릭")
@@ -124,6 +136,9 @@ export default function SignUpPage() {
                 <MdDriveFileRenameOutline />
                 <input id={"name"} type="name" name="name" placeholder="이름을 입력해주세요" value={name} onChange={handleNameChange}/>
               </div>
+              <div className="error-message">{
+                !nameValid && name.length > 0 && <div>이름 수를 2~6글자로 입력해주세요</div>
+              }</div>
             </div>
             <div className="last-box">
             <button className="signup-btn" type="button" onClick={clickMoveChange}>가입하기</button>
