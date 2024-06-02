@@ -45,9 +45,9 @@ root.render(
             <Route index element={<MainPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
-            <Route path="/post">
+            <Route path="/posts">
               <Route index element={<PostListPage />} />
-              <Route path="detail" element={<PostDetailPage />} />
+              <Route path="detail/:id" element={<PostDetailPage />} />
               <Route path="upload" element={<PostUploadPage />} />
             </Route>
           </Route>

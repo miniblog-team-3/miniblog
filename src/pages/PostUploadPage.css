@@ -14,6 +14,31 @@
     border-width: 0 0 1px;
     padding: 10px;
     margin-bottom: 20px;
+    .post-upload-container {
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+      .post-input {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .title-input {
+        width: 500px;
+        height: 30px;
+        font-size: medium;
+        border-width: 0 0 1px;
+        padding: 10px;
+        margin-bottom: 20px;
+        /* border: none; */
+      }
+      .content-input {
+        width: 500px;
+        height: 300px;
+        font-size: medium;
+        padding: 10px;
+      }
+    }
     /* border: none; */
   }
   .content-input {

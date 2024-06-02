@@ -27,7 +27,7 @@ export default function Header() {
             </ul>
           </li>
 
-          <Link to="/post/upload">
+          <Link to="/posts/upload">
             <li className="upload">글쓰기</li>
           </Link>
         </div>

@@ -19,7 +19,7 @@ export default function LoginPage() {
   // 이메일 입력
   const handelEmailChange = (e) => {
     setEmail(e.target.value);
-    // console.log("email : ", e.target.value)
+    // console.log("email : ", e.target.value)111
 
     // 이메일 유효성 검사
     const emailRegEx = /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/i;
