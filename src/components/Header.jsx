@@ -3,6 +3,9 @@ import "./Header.css";
 import { Link } from "react-router-dom";
 
 export default function Header() {
+  const user = JSON.parse(sessionStorage.getItem("user")); // sessionStorage에서 유저 정보를 가져옴
+  console.log("user : ", user);
+
   return (
     <div className="header-container">
       <ul className="header-wrap">
@@ -17,9 +20,7 @@ export default function Header() {
         {/* 로그인 & 유저 */}
         <div className="user-info-wrap">
           <li className="user-login">
-            <Link to="/login">
-              <p>로그인</p>
-            </Link>
+            <Link to="/login">{user ? <p>로그아웃</p> : <p>로그인</p>}</Link>
             <ul className="sub-menu">
               <Link to="/signup">
                 <li>회원가입</li>

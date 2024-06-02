@@ -1,9 +1,10 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+
 import { getDatabase, ref as databaseRef, push, get, set } from "firebase/database";
 import { getDownloadURL, getStorage, ref as refImg, uploadBytes } from "firebase/storage";
 import { v4 as uuid } from "uuid";
+import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -16,9 +17,10 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 const database = getDatabase(app);
 const storage = getStorage();
+const auth = getAuth();
+const provider = new GoogleAuthProvider();
 
 //이미지를 storage에 업로드하는 api
 export async function uploadImages(file) {
@@ -76,5 +78,52 @@ export async function getPostId(postId) {
     }
   } catch (err) {
     console.error("id비교하여 디테일페이지에 정보를 찾는 기능 에러 : ", err);
+  }
+}
+
+//구글 로그인 api
+export async function googleLogin() {
+  try {
+    const userData = await signInWithPopup(auth, provider);
+    console.log("userData : ", userData);
+    const user = userData.user;
+    console.log("user : ", user);
+    return user;
+  } catch (err) {
+    console.error("구글 로그인 api 기능 실패 : ", err);
+  }
+}
+
+//이메일, 비밀번호 회원가입 api
+export async function joinEmail(email, password, name) {
+  try {
+    //Authentication firebase 유저 인증에 업로드 - database 업로드 x
+    const userData = await createUserWithEmailAndPassword(auth, email, password);
+    console.log("userData : ", userData);
+    const user = userData.user;
+    await updateProfile(user, {
+      displayName: name,
+    });
+    await signOut(auth);
+
+    //firebase에 database 에 업로드하기 위한 api 코드
+    await set(databaseRef(database, "users/" + user.uid), {
+      email,
+      name,
+    });
+    return user;
+  } catch (err) {
+    console.error("회원가입 에러 : ", err);
+  }
+}
+
+//이메일, 비밀번호 로그인 api
+export async function loginEmail(email, password) {
+  try {
+    const userData = await signInWithEmailAndPassword(auth, email, password);
+    const user = userData.user;
+    return user;
+  } catch (err) {
+    console.error("로그인 기능 에러 : ", err);
   }
 }
