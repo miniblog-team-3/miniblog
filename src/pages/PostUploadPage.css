@@ -21,5 +21,40 @@
     height: 300px;
     font-size: medium;
     padding: 10px;
+    border-color: #E0E0E0;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  .fileUpload {
+    display: flex;
+    justify-content: space-between;
+  }
+    .file-input {
+      display: none;
+    }
+    .custom-file-upload {
+      width: fit-content;
+      padding: 16px;
+      /* background-color: #F5F5F5; */
+      border-radius: 12px;
+      /* color: white; */
+      font-weight: bold;
+      cursor: pointer;
+      padding: 10px;
+    }
+    .file-name {
+      font-size: small;
+      margin: 10px;
+      /* padding: 10px; */
+    
+    }
+  .upload-btn {
+    width: 80px;
+    height: 40px;
+    background: #0095f6;
+    border: none;
+    color: white;
+    font-weight: bolder;
+    border-radius: 10px;
   }
 }
