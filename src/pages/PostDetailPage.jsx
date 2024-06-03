@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./PostDetailPage.css";
-import { setComment, getPostId } from "../api/api";
+import { setComment, getPostId, getComment } from "../api/api";
 import { useLocation } from "react-router-dom";
 
 export default function PostDetailPage() {
@@ -8,6 +8,7 @@ export default function PostDetailPage() {
   // console.log("post : ", post);
   const [text1, setText1] = useState("");
   const [comments, setComments] = useState([]); // 댓글 목록 상태 추가
+  // console.log("comments : ", comments);
 
   const location = useLocation();
   const pathName = location.pathname;
@@ -33,15 +34,25 @@ export default function PostDetailPage() {
 
   const handleUploadComment = async () => {
     try {
-      const comment = {
-        comments,
-      };
-      const res = await setComment(comment);
+      const res = await setComment(text1);
+      console.log("res : ", res);
       setText1("");
     } catch (err) {
       console.log("댓글 데이터베이스 업로드 기능 에러 : ", err);
     }
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await getComment();
+        setComments(res);
+      } catch (err) {
+        console.error("댓글 가져오는 기능 api 에러 : ", err);
+      }
+    };
+    fetchData();
+  }, [comments]);
 
   return (
     <div className="container">
@@ -66,11 +77,14 @@ export default function PostDetailPage() {
             댓글작성
           </button>
         </form>
-
-        <div className="comments-list">
-          <span>준성 |</span>
-          <p>asd</p>
-        </div>
+        {comments.map((el, idx) => {
+          return (
+            <div className="comments-list" key={idx}>
+              <span>준성 |</span>
+              <p>{el}</p>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

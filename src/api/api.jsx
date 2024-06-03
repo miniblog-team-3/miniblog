@@ -132,16 +132,18 @@ export async function loginEmail(email, password) {
 export async function setComment(comments) {
   try {
     const id = uuid();
-    const commentsData = push(databaseRef(database, `comments/${id}`), {
+    console.log("id : ", id);
+    const commentsData = await set(databaseRef(database, `comments/${id}`), {
       comments,
     });
+    console.log("commentsData : ", commentsData);
     return commentsData;
   } catch (err) {
     console.error("댓글 데이터베이스 폴더에 업로드 하는 기능 에러 : ", err);
   }
 }
 
-export async function getComments() {
+export async function getComment() {
   try {
     const commentRef = databaseRef(database, `comments`);
     const snapshot = await get(commentRef);
