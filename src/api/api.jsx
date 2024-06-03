@@ -129,7 +129,7 @@ export async function loginEmail(email, password) {
 }
 
 //댓글 업로드 api
-export async function setComments(comments) {
+export async function setComment(comments) {
   try {
     const id = uuid();
     const commentsData = push(databaseRef(database, `comments/${id}`), {

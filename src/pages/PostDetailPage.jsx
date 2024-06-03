@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./PostDetailPage.css";
-import { getComments, getPostId } from "../api/api";
+import { setComment, getPostId } from "../api/api";
 import { useLocation } from "react-router-dom";
 
 export default function PostDetailPage() {
@@ -36,7 +36,7 @@ export default function PostDetailPage() {
       const comment = {
         comments,
       };
-      const res = await setComments(comment);
+      const res = await setComment(comment);
       setText1("");
     } catch (err) {
       console.log("댓글 데이터베이스 업로드 기능 에러 : ", err);
