@@ -1,6 +1,7 @@
 .container {
   width: 100%;
   max-width: 1000px;
+  min-height: 100vh;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -36,6 +37,9 @@
 
   .comments-container {
     display: flex;
+    flex-direction: column;
+    gap: 30px;
+
     .comments-wrapper {
       display: flex;
       align-items: center;
@@ -51,6 +55,22 @@
           border: none;
           outline: none;
         }
+      }
+    }
+
+    .comments-list {
+      display: flex;
+      width: 450px;
+      border-top: 1px solid #dedede;
+      padding-top: 20px;
+      span {
+        width: 70px;
+        color: #726f6f;
+        font-weight: bold;
+      }
+      p {
+        width: 450px;
+        color: #928e8e;
       }
     }
   }

@@ -50,9 +50,9 @@ export default function PostUploadPage() {
         <form className="post-input">
           <input className="title-input" type="text" placeholder="제목" onChange={handleChangeTitle} name="title" value={title} />
           <textarea className="content-input" placeholder="내용을 입력해주세요" onChange={handleChangeDescription} name="description" value={description} />
-          <input type="file" id="image" name="image" accept="image/*" onChange={handleImageChange} />
+          <input className="file" type="file" id="image" name="image" accept="image/*" onChange={handleImageChange} />
           <button type="submit" className="upload-btn" onClick={clickUploadPost}>
-            등록
+            게시글 등록
           </button>
         </form>
       </div>

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./PostDetailPage.css";
-import { getPostId } from "../api/api";
+import { getComments, getPostId } from "../api/api";
 import { useLocation } from "react-router-dom";
 
 export default function PostDetailPage() {
   const [post, setPost] = useState({});
+  // console.log("post : ", post);
   const [text1, setText1] = useState("");
   const [comments, setComments] = useState([]); // 댓글 목록 상태 추가
 
@@ -16,7 +17,7 @@ export default function PostDetailPage() {
     const fetchData = async () => {
       try {
         const detailId = await getPostId(id);
-        console.log("detailId : ", detailId);
+        // console.log("detailId : ", detailId);
         setPost(detailId);
       } catch (err) {
         console.error("글 디테일 정보가져오기 에러 : ", err);
@@ -30,12 +31,16 @@ export default function PostDetailPage() {
     console.log(e.target.value);
   };
 
-  const handleUploadComment = () => {
-    if (text1.trim()) {
-      setComments([...comments, text1]); // 새로운 댓글 추가
-      setText1(""); // 입력 필드 초기화
+  const handleUploadComment = async () => {
+    try {
+      const comment = {
+        comments,
+      };
+      const res = await setComments(comment);
+      setText1("");
+    } catch (err) {
+      console.log("댓글 데이터베이스 업로드 기능 에러 : ", err);
     }
-    console.log("클릭");
   };
 
   return (
@@ -61,12 +66,10 @@ export default function PostDetailPage() {
             댓글작성
           </button>
         </form>
+
         <div className="comments-list">
-          {comments.map((comment, index) => (
-            <div key={index}>
-              <p>{comment}</p>
-            </div>
-          ))}
+          <span>준성 |</span>
+          <p>asd</p>
         </div>
       </div>
     </div>
