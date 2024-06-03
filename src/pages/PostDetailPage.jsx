@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./PostDetailPage.css";
 import { setComment, getPostId, getComment } from "../api/api";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export default function PostDetailPage() {
   const [post, setPost] = useState({});
@@ -13,6 +14,24 @@ export default function PostDetailPage() {
   const location = useLocation();
   const pathName = location.pathname;
   const id = pathName.split("/").pop();
+
+  const navigete = useNavigate();
+
+  const [user, setUser] = useState(null);
+  // console.log("user : ", user);
+
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,8 +52,17 @@ export default function PostDetailPage() {
   };
 
   const handleUploadComment = async () => {
+    if (!user) {
+      alert("로그인 전용기능입니다. 로그인 페이지로 이동합니다.");
+      navigete("/login");
+      return;
+    }
     try {
-      const res = await setComment(text1);
+      if (!text1) {
+        alert("댓글 내용을 작성해주세요");
+        return;
+      }
+      const res = await setComment(text1, user.displayName);
       console.log("res : ", res);
       setText1("");
     } catch (err) {
@@ -42,17 +70,18 @@ export default function PostDetailPage() {
     }
   };
 
+  const fetchComments = async () => {
+    try {
+      const res = await getComment(id);
+      setComments(res);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await getComment();
-        setComments(res);
-      } catch (err) {
-        console.error("댓글 가져오는 기능 api 에러 : ", err);
-      }
-    };
-    fetchData();
-  }, [comments]);
+    fetchComments();
+  }, [id]);
 
   return (
     <div className="container">
@@ -80,8 +109,8 @@ export default function PostDetailPage() {
         {comments.map((el, idx) => {
           return (
             <div className="comments-list" key={idx}>
-              <span>준성 |</span>
-              <p>{el}</p>
+              <span>{el.userName} |</span>
+              <p>{el.comments}</p>
             </div>
           );
         })}

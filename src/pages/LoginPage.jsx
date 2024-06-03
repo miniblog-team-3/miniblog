@@ -52,7 +52,7 @@ export default function LoginPage() {
       const userData = await googleLogin();
       if (userData) {
         alert("구글 로그인에 성공했습니다.");
-        sessionStorage.setItem("user", JSON.stringify(userData));
+        // sessionStorage.setItem("user", JSON.stringify(userData));
         setUser(userData);
         navigete("/");
       }
@@ -68,7 +68,7 @@ export default function LoginPage() {
         alert("로그인에 성공했습니다.");
         navigete("/");
         setUser(res);
-        sessionStorage.setItem("user", JSON.stringify(res));
+        // sessionStorage.setItem("user", JSON.stringify(res));
       } else {
         alert("아이디 또는 비밀번호가 잘못되었습니다.");
       }

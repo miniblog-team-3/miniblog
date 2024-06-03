@@ -4,7 +4,17 @@ import { initializeApp } from "firebase/app";
 import { getDatabase, ref as databaseRef, push, get, set } from "firebase/database";
 import { getDownloadURL, getStorage, ref as refImg, uploadBytes } from "firebase/storage";
 import { v4 as uuid } from "uuid";
-import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
+import {
+  GoogleAuthProvider,
+  browserSessionPersistence,
+  createUserWithEmailAndPassword,
+  getAuth,
+  setPersistence,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+  updateProfile,
+} from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -120,6 +130,7 @@ export async function joinEmail(email, password, name) {
 //이메일, 비밀번호 로그인 api
 export async function loginEmail(email, password) {
   try {
+    await setPersistence(auth, browserSessionPersistence);
     const userData = await signInWithEmailAndPassword(auth, email, password);
     const user = userData.user;
     return user;
@@ -129,12 +140,13 @@ export async function loginEmail(email, password) {
 }
 
 //댓글 업로드 api
-export async function setComment(comments) {
+export async function setComment(comments, userName) {
   try {
     const id = uuid();
     console.log("id : ", id);
     const commentsData = await set(databaseRef(database, `comments/${id}`), {
       comments,
+      userName,
     });
     console.log("commentsData : ", commentsData);
     return commentsData;
@@ -143,7 +155,7 @@ export async function setComment(comments) {
   }
 }
 
-export async function getComment() {
+export async function getComment(postId) {
   try {
     const commentRef = databaseRef(database, `comments`);
     const snapshot = await get(commentRef);
