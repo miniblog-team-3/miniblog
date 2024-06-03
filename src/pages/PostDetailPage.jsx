@@ -72,8 +72,11 @@ export default function PostDetailPage() {
 
   const fetchComments = async () => {
     try {
-      const res = await getComment(id);
-      setComments(res);
+      const res = await setComment(text1, user.displayName);
+      console.log("res : ", res);
+      setText1("");
+      const res1 = await getComment(id);
+      setComments(res1);
     } catch (err) {
       console.error(err);
     }
