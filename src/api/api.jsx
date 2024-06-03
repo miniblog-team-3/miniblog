@@ -140,11 +140,11 @@ export async function loginEmail(email, password) {
 }
 
 //댓글 업로드 api
-export async function setComment(comments, userName) {
+export async function setComment(postId, comments, userName) {
   try {
     const id = uuid();
     console.log("id : ", id);
-    const commentsData = await set(databaseRef(database, `comments/${id}`), {
+    const commentsData = await set(databaseRef(database, `comments/${postId}/${id}`), {
       comments,
       userName,
     });
@@ -157,7 +157,8 @@ export async function setComment(comments, userName) {
 
 export async function getComment(postId) {
   try {
-    const commentRef = databaseRef(database, `comments`);
+    const commentRef = databaseRef(database, `comments/${postId}`);
+    console.log("commentRef : ", commentRef);
     const snapshot = await get(commentRef);
     if (snapshot.exists()) {
       const item = Object.values(snapshot.val());

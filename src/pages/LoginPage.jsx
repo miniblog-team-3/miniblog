@@ -68,7 +68,6 @@ export default function LoginPage() {
         alert("로그인에 성공했습니다.");
         navigete("/");
         setUser(res);
-        // sessionStorage.setItem("user", JSON.stringify(res));
       } else {
         alert("아이디 또는 비밀번호가 잘못되었습니다.");
       }
@@ -103,8 +102,7 @@ export default function LoginPage() {
             로그인
           </button>
           <button className="google-login" type="button" onClick={clickGoogleLogin}>
-            <img src="/google_icon.webp" alt="logo" className="google_img" />
-            구글 로그인
+            <img src="/google.png" alt="logo" className="google_img" />
           </button>
           <div>
             <div className="signup-box">

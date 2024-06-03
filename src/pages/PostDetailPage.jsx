@@ -62,20 +62,21 @@ export default function PostDetailPage() {
         alert("댓글 내용을 작성해주세요");
         return;
       }
-      const res = await setComment(text1, user.displayName);
-      console.log("res : ", res);
-      const fetchComments = async () => {
-        try {
-          const res = await getComment(id);
-          setComments(res);
-        } catch (err) {
-          console.error(err);
-        }
-      };
-      setText1("");
+      const res = await setComment(id, text1, user.displayName);
       fetchComments();
+      console.log("res : ", res);
+      setText1("");
     } catch (err) {
       console.log("댓글 데이터베이스 업로드 기능 에러 : ", err);
+    }
+  };
+
+  const fetchComments = async () => {
+    try {
+      const res = await getComment(id);
+      setComments(res);
+    } catch (err) {
+      console.error(err);
     }
   };
 
