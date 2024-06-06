@@ -1,9 +1,9 @@
 .container {
   width: 100%;
   max-width: 1000px;
-  min-height: 100vh;
   margin: 0 auto;
   display: flex;
+  min-height: 100vh;
   flex-direction: column;
   align-items: center;
   .post-detail-container {
@@ -25,6 +25,7 @@
       gap: 20px;
       flex-direction: column;
       align-items: center;
+      max-width: 400px;
       h2 {
         font-size: 1.3rem;
       }
@@ -35,43 +36,53 @@
     }
   }
 
+  .comments-list {
+    width: 400px;
+    /* border-radius: 5px; */
+    .comments-wrap {
+      display: flex;
+      padding: 5px 20px;
+      border-bottom: 1px solid #eae7e7;
+      margin-bottom: 10px;
+      p:first-child {
+        width: 150px;
+      }
+      p:last-child {
+        flex: 5;
+      }
+    }
+  }
+
   .comments-container {
     display: flex;
-    flex-direction: column;
-    gap: 30px;
-
+    margin-bottom: 30px;
+    border-bottom: 1px solid #dedede;
+    padding-bottom: 10px;
     .comments-wrapper {
       display: flex;
       align-items: center;
       gap: 20px;
-      label {
-      }
-      .input-wrap {
-        border-bottom: 1px solid #dedede;
-        &:focus {
-          border-bottom: 1px solid tomato;
-        }
-        input {
-          border: none;
-          outline: none;
-        }
-      }
-    }
-
-    .comments-list {
-      display: flex;
-      width: 450px;
-      border-top: 1px solid #dedede;
-      padding-top: 20px;
-      span {
-        width: 70px;
-        color: #726f6f;
+      width: 400px;
+      margin: 10px;
+      .comment-btn {
+        background: #0095f6;
+        border: none;
+        color: white;
+        width: 80px;
+        height: 40px;
+        cursor: pointer; /* cursor 포인터 효과주기 */
+        /* font-size: medium; */
         font-weight: bold;
-      }
-      p {
-        width: 450px;
-        color: #928e8e;
+        border-radius: 10px;
+        &:hover {
+          background-color: #3c66ee;
+          border: 1px solid #3c66ee;
+        }
       }
     }
+  }
+
+  @media (max-width: 600px) {
+    transform: scale(0.9);
   }
 }

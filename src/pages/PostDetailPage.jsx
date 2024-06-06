@@ -9,7 +9,7 @@ export default function PostDetailPage() {
   // console.log("post : ", post);
   const [text1, setText1] = useState("");
   const [comments, setComments] = useState([]); // 댓글 목록 상태 추가
-  // console.log("comments : ", comments);
+  console.log("comments : ", comments);
 
   const location = useLocation();
   const pathName = location.pathname;
@@ -95,26 +95,27 @@ export default function PostDetailPage() {
           <p>{post.description}</p>
         </div>
       </div>
+
       <div className="comments-container">
         <form className="comments-wrapper" onSubmit={(e) => e.preventDefault()}>
           {" "}
           {/* 폼 제출 방지 */}
-          <label htmlFor="comment">댓글</label>
+          {/* <label htmlFor="comment">댓글</label> */}
           <div className="input-wrap">
             <input type="text" id="comment" name="comment" onChange={handleChageText} value={text1} placeholder="댓글을 달아주세요." />
           </div>
-          <button type="button" onClick={handleUploadComment}>
-            댓글작성
+          <button className="comment-btn" type="button" onClick={handleUploadComment}>
+            등록
           </button>
         </form>
-        {comments.map((el, idx) => {
-          return (
-            <div className="comments-list" key={idx}>
-              <span>{el.userName} |</span>
-              <p>{el.comments}</p>
-            </div>
-          );
-        })}
+      </div>
+      <div className="comments-list">
+        {comments.map((comment, index) => (
+          <div key={index} className="comments-wrap">
+            <p>{comment.userName} :</p>
+            <p>{comment.comments}</p>
+          </div>
+        ))}
       </div>
     </div>
   );

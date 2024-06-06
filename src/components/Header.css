@@ -1,5 +1,5 @@
 .header-container {
-  border-bottom: 1px solid #dedede;
+  /* border-bottom: 1px solid #dedede; */
   margin-bottom: 30px;
   .header-wrap {
     display: flex;
@@ -36,23 +36,38 @@
           border: 1px solid #0095f6;
           border-radius: 8px;
           color: white;
+          width: 100px;
+          text-align: center;
           &:hover {
             background-color: #3c66ee;
+            border: 1px solid #3c66ee;
+            /* transition: 1s; */
           }
         }
         .sub-menu {
-          text-align: center;
+          /* text-align: center; */
           width: 100px;
           position: absolute;
           padding: 15px;
+          text-align: center;
+          /* padding: 15px; */
           border: 1px solid #dedede;
-          border-top: none;
+          /* border-top: none; */
+          /* border: none; */
+          border-radius: 8px;
+          left: -0.1px;
           /* left: -15px; */
-          margin-top: -5px;
+          /* margin-top: -5px; */
+
+          /* margin-top: -0.5px; */
           visibility: hidden;
           font-size: 0.85rem;
+          color: #0095f6;
+          z-index: 1;
+          background-color: white;
           &:hover {
-            color: #0095f6;
+            /* transition:1s; */
+            color: red;
           }
         }
       }
