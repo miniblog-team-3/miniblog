@@ -55,8 +55,8 @@
 
   .comments-container {
     display: flex;
-    margin-bottom: 30px;
-    border-bottom: 1px solid #dedede;
+    margin-bottom: 10px;
+    /* border-bottom: 1px solid #dedede; */
     padding-bottom: 10px;
     .comments-wrapper {
       display: flex;
