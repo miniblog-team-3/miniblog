@@ -8,6 +8,7 @@
   width: 100%;
   max-width: 1000px;
   margin: 0 auto;
+  height: 550px;
 }
 
 .title {
@@ -94,7 +95,7 @@ input::placeholder {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 40px;
+  margin: 40px 0;
 }
 
 .signup-btn {
@@ -102,6 +103,9 @@ input::placeholder {
   height: 50px;
   border: 1px solid lightgrey;
   border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: #0095f6;
   color: white;
   margin: 0 5px;
@@ -120,6 +124,9 @@ input::placeholder {
   height: 50px;
   border: 1px solid lightgrey;
   border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: lightgrey;
   color: gray;
   margin: 0 5px;

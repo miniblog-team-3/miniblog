@@ -68,7 +68,7 @@ export default function LoginPage() {
       const userData = await googleLogin();
       if (userData) {
         alert("구글 로그인에 성공했습니다.");
-        sessionStorage.setItem("user", JSON.stringify(userData));
+        // sessionStorage.setItem("user", JSON.stringify(userData));
         setUser(userData);
         navigete("/");
       }
@@ -78,18 +78,17 @@ export default function LoginPage() {
   };
 
   const clickEmailLogin = async () => {
-    try {
-      const res = await loginEmail(email, password);
-      if (res) {
-        alert("로그인에 성공했습니다.");
-        navigete("/");
-        setUser(res);
-        sessionStorage.setItem("user", JSON.stringify(res));
-      } else {
-        alert("아이디 또는 비밀번호가 잘못되었습니다.");
+    try{
+      const result = await loginEmail(email, password)
+      if (result){
+        navigete('/');
+        alert('로그인에 성공했습니다');
+      }else{
+        alert('이메일, 비밀번호를 정확히 입력해주세요. or 가입된 아이디가 아닙니다.')
       }
-    } catch (err) {
-      console.error("로그인 기능 에러 : ", err);
+      
+    } catch(err){
+      console.error('로그인 실패 : ', err)
     }
   };
 
@@ -119,8 +118,7 @@ export default function LoginPage() {
             로그인
           </button>
           <button className="google-login" type="button" onClick={clickGoogleLogin}>
-            <img src="/google_icon.webp" alt="logo" className="google_img" />
-            구글 로그인
+            <img src="/google.png" alt="logo" className="google_img" />
           </button>
           <div>
           <div className="signup-box">

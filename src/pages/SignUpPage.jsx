@@ -8,7 +8,7 @@ import { FaUser } from "react-icons/fa";
 
 export default function SignUpPage() {
 
-  const navigete = useNavigate();
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -86,7 +86,7 @@ export default function SignUpPage() {
 
   const clickMoveChange = () => {
     console.log("클릭")
-    navigete('/login', {
+    navigate('/login', {
       state : {
         email,
         password,
@@ -98,17 +98,12 @@ export default function SignUpPage() {
 
 
   const clickSignUpEvent = async () => {
-    try {
-      const res = await joinEmail(email, password, name);
-      alert("회원가입에 성공했습니다.");
-      navigete("/login");
-    } catch (err) {
-      console.log("이메일 회원가입 기능 에러 : ", err);
-      if (err.code === "auth/email-already-in-use") {
-        alert("이미 사용중인 이메일");
-      } else {
-        alert("회원가입에 실패하였습니다.");
-      }
+    try{
+      const result = await joinEmail(email, password, name)
+      navigate('/login');
+      alert('회원가입에 성공했습니다');
+    }catch(err){
+      console.error('회원가입 실패', err);
     }
   };
 
