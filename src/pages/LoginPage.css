@@ -100,9 +100,11 @@ input::placeholder {
 }
 
 .google_img {
-  width: 25px;
-  height: 25px;
+  width: 320px;
   margin: 0;
+  outline: none;
+  border: none;
+  height: 60px;
 }
 
 .input-google-wrap {

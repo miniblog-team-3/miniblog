@@ -1,19 +1,34 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics"; // Firebase Analytics 추가
 
 import { getDatabase, ref as databaseRef, push, get, set } from "firebase/database";
 import { getDownloadURL, getStorage, ref as refImg, uploadBytes } from "firebase/storage";
 import { v4 as uuid } from "uuid";
-import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
+import {
+  GoogleAuthProvider,
+  browserSessionPersistence,
+  createUserWithEmailAndPassword,
+  getAuth,
+  setPersistence,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+  updateProfile,
+} from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_API_KEY,
-  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-  projectId: process.env.REACT_APP_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-  databaseURL: "https://miniblog-9b4d2-default-rtdb.asia-southeast1.firebasedatabase.app/",
-  appId: "1:70096492949:web:94cb336e429efcc670be9c",
+  apiKey: process.env.REACT_APP_key,
+  authDomain: process.env.REACT_APP_auth_domain,
+  databaseURL: process.env.REACT_APP_database_url,
+  projectId: process.env.REACT_APP_project_id,
+  storageBucket: process.env.REACT_APP_storage,
+  // messagingSenderId: "70189587756",
+  appId: process.env.REACT_APP_api_id,
+  // measurementId: "G-LC6KHGHEJD",
 };
+
+console.log(process.env.REACT_APP_API_KEY);
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -22,7 +37,9 @@ const storage = getStorage();
 const auth = getAuth();
 const provider = new GoogleAuthProvider();
 
-//이미지를 storage에 업로드하는 api
+const analytics = getAnalytics(app);
+
+//이미지를 storage에 업로드하는 api...
 export async function uploadImages(file) {
   try {
     const id = uuid();
@@ -36,7 +53,7 @@ export async function uploadImages(file) {
   }
 }
 
-//글 업로드 페이지에서 주제, 내용 데이터를 firebase에 업로드하는 api
+//글 업로드 페이지에서 주제,, 내용 데이터를 firebase에 업로드하는 api
 export async function uploadPostData(post, imgUrl) {
   try {
     const id = uuid();
@@ -120,10 +137,44 @@ export async function joinEmail(email, password, name) {
 //이메일, 비밀번호 로그인 api
 export async function loginEmail(email, password) {
   try {
+    await setPersistence(auth, browserSessionPersistence);
     const userData = await signInWithEmailAndPassword(auth, email, password);
     const user = userData.user;
     return user;
   } catch (err) {
     console.error("로그인 기능 에러 : ", err);
+  }
+}
+
+//댓글 업로드 api
+export async function setComment(postId, comments, userName) {
+  try {
+    const id = uuid();
+    console.log("id : ", id);
+    const commentsData = await set(databaseRef(database, `comments/${postId}/${id}`), {
+      comments,
+      userName,
+    });
+    console.log("commentsData : ", commentsData);
+    return commentsData;
+  } catch (err) {
+    console.error("댓글 데이터베이스 폴더에 업로드 하는 기능 에러 : ", err);
+  }
+}
+
+export async function getComment(postId) {
+  try {
+    const commentRef = databaseRef(database, `comments/${postId}`);
+    console.log("commentRef : ", commentRef);
+    const snapshot = await get(commentRef);
+    if (snapshot.exists()) {
+      const item = Object.values(snapshot.val());
+      return item;
+    } else {
+      return [];
+    }
+  } catch (err) {
+    console.log("댓글 api 가져오기 기능 에러 : ", err);
+    return [];
   }
 }

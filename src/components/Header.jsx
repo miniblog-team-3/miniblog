@@ -1,16 +1,48 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Header.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
 export default function Header() {
-  const user = JSON.parse(sessionStorage.getItem("user")); // sessionStorage에서 유저 정보를 가져옴
-  console.log("user : ", user);
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await signOut(getAuth());
+      setUser(null);
+      navigate("/");
+    } catch (error) {
+      console.error("로그아웃 에러:", error);
+    }
+  };
+
+  const clickWriteMove = () => {
+    if (!user) {
+      alert("로그인전용 기능입니다. 로그인 페이지로 이동합니다.");
+      navigate("/login");
+      return;
+    } else {
+      navigate("/posts/upload");
+    }
+  };
 
   return (
     <div className="header-container">
       <ul className="header-wrap">
         {/* 로고  */}
-
         <li className="img-wrap">
           <Link to="/">
             <img src="/1.png" alt="프로젝트 로고" />
@@ -20,17 +52,25 @@ export default function Header() {
         {/* 로그인 & 유저 */}
         <div className="user-info-wrap">
           <li className="user-login">
-            <Link to="/login">{user ? <p>로그아웃</p> : <p>로그인</p>}</Link>
-            <ul className="sub-menu">
-              <Link to="/signup">
-                <li>회원가입</li>
+            {user ? (
+              <p onClick={handleLogout}>로그아웃</p>
+            ) : (
+              <Link to="/login">
+                <p>로그인</p>
               </Link>
-            </ul>
+            )}
+            {!user && (
+              <ul className="sub-menu">
+                <Link to="/signup">
+                  <li>회원가입</li>
+                </Link>
+              </ul>
+            )}
           </li>
 
-          <Link to="/posts/upload">
-            <li className="upload">글쓰기</li>
-          </Link>
+          <li className="upload" onClick={clickWriteMove}>
+            글쓰기
+          </li>
         </div>
       </ul>
     </div>
