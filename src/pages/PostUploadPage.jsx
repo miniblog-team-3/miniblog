@@ -9,6 +9,9 @@ export default function PostUploadPage() {
   const [description, setDescription] = useState("");
   const navigate = useNavigate();
 
+  const userUid = localStorage.getItem("uid");
+  console.log("userUid : ", userUid);
+
   const handleChangeTitle = (e) => {
     setTitle(e.target.value);
     console.log("title: ", e.target.value);
@@ -26,17 +29,21 @@ export default function PostUploadPage() {
   const clickUploadPost = async (e) => {
     e.preventDefault();
     try {
-      const post = {
-        title,
-        description,
-      };
-
-      const url = await uploadImages(file);
-      const item = await uploadPostData(post, url);
       if (!title || !description || !file) {
         alert("제목, 내용, 이미지를 모두 입력해주세요.");
         return;
       }
+
+      const post = {
+        title,
+        description,
+        userUid,
+      };
+      console.log("post : ", post);
+
+      const url = await uploadImages(file);
+      const item = await uploadPostData(post, url);
+
       alert("글을 작성했습니다.");
       navigate("/");
     } catch (err) {

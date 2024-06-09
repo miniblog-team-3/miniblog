@@ -24,7 +24,7 @@ export default function LoginPage() {
     setEmail(e.target.value);
     // console.log("email : ", e.target.value)111
 
-    // 이메일 유효성 검사
+    // 이메일 유효성 검사 dsadasdsadasdasd
     const emailRegEx = /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/i;
     if (emailRegEx.test(email)) {
       setEmailValid(true);
@@ -52,9 +52,9 @@ export default function LoginPage() {
       const userData = await googleLogin();
       if (userData) {
         alert("구글 로그인에 성공했습니다.");
-        // sessionStorage.setItem("user", JSON.stringify(userData));
         setUser(userData);
         navigete("/");
+        localStorage.setItem("uid", userData.uid);
       }
     } catch (err) {
       console.error("구글 로그인 안됌 : ", err);
@@ -68,6 +68,7 @@ export default function LoginPage() {
         alert("로그인에 성공했습니다.");
         navigete("/");
         setUser(res);
+        localStorage.setItem("uid", res.uid);
       } else {
         alert("아이디 또는 비밀번호가 잘못되었습니다.");
       }
