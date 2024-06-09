@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics"; // Firebase Analytics 추가
 
-import { getDatabase, ref as databaseRef, push, get, set } from "firebase/database";
+import { getDatabase, ref as databaseRef,  get, set, remove } from "firebase/database";
 import { getDownloadURL, getStorage, ref as refImg, uploadBytes } from "firebase/storage";
 import { v4 as uuid } from "uuid";
 import {
@@ -64,6 +64,15 @@ export async function uploadPostData(post, imgUrl) {
     });
   } catch (err) {
     console.log("글 업로드 기능 에러 : ", err);
+  }
+}
+
+export async function deletePostDat(postId) {
+  try {
+    const postRef = databaseRef(database, `posts/${postId}`);
+    await remove(postRef);
+  } catch (err) {
+    console.error("포스트 글 삭제");
   }
 }
 
